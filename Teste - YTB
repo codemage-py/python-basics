@@ -1,0 +1,4 @@
+Dia = input ("Qual dia você nasceu?")
+Mês = input ("E o mês?")
+Ano = input ("Em qual ano?")
+print ("Você nasceu no dia", Dia, "De", Mês, "De", Ano, ".Correto?")
