@@ -1,0 +1,310 @@
+"""
+CALCULADORA COMPLETA EM PYTHON
+Com comentários explicativos em cada linha
+"""
+
+# Importa o módulo 'math' para operações matemáticas avançadas
+import math
+
+
+def calculadora():
+    """
+    Função principal da calculadora.
+    Controla o menu e direciona para as operações.
+    """
+
+    # Loop infinito para manter a calculadora rodando
+    while True:
+        # Exibe o menu de opções
+        print("\n" + "=" * 40)  # Imprime 40 sinais de "=" para separação
+        print("CALCULADORA PYTHON - ESCOLHA A OPERAÇÃO")
+        print("=" * 40)
+        print("1. Soma (+)")
+        print("2. Subtração (-)")
+        print("3. Multiplicação (*)")
+        print("4. Divisão (/)")
+        print("5. Potência (xʸ)")
+        print("6. Raiz Quadrada (√)")
+        print("7. Porcentagem (%)")
+        print("8. Sair")
+        print("-" * 40)
+
+        # Solicita ao usuário que escolha uma opção
+        # input() sempre retorna string, então vamos usar como está
+        opcao = input("Digite o número da operação (1-8): ")
+
+        # Verifica se o usuário quer sair (opção 8)
+        if opcao == "8":
+            print("Obrigado por usar a calculadora! Até mais! 👋")
+            break  # Sai do loop while e encerra a função
+
+        # Se não for sair, verifica se a opção é válida (1-7)
+        if opcao not in ["1", "2", "3", "4", "5", "6", "7"]:
+            print("❌ Opção inválida! Tente novamente.")
+            continue  # Volta para o início do loop
+
+        # OPERAÇÕES QUE PRECISAM DE DOIS NÚMEROS
+        if opcao in ["1", "2", "3", "4", "5", "7"]:
+            try:
+                # Solicita o primeiro número
+                # float() converte a string para número decimal
+                num1 = float(input("Digite o primeiro número: "))
+
+                # Solicita o segundo número
+                num2 = float(input("Digite o segundo número: "))
+
+                # Chama a função para realizar a operação escolhida
+                realizar_operacao(opcao, num1, num2)
+
+            except ValueError:  # Captura erro se usuário digitar texto em vez de número
+                print("❌ Erro: Digite apenas números válidos!")
+            except ZeroDivisionError:  # Captura erro de divisão por zero
+                print("❌ Erro: Não é possível dividir por zero!")
+
+        # OPERAÇÃO DE RAIZ QUADRADA (precisa de apenas um número)
+        elif opcao == "6":
+            try:
+                # Solicita o número para calcular a raiz
+                num = float(input("Digite o número para calcular a raiz quadrada: "))
+
+                # Verifica se o número é negativo (raiz de negativo dá erro com math.sqrt)
+                if num < 0:
+                    print("❌ Erro: Não é possível calcular raiz de número negativo!")
+                else:
+                    # Calcula a raiz quadrada usando math.sqrt()
+                    resultado = math.sqrt(num)
+                    print(f"√{num} = {resultado:.4f}")  # :.4f formata com 4 casas decimais
+
+            except ValueError:
+                print("❌ Erro: Digite um número válido!")
+
+
+def realizar_operacao(opcao, num1, num2):
+    """
+    Executa a operação matemática baseada na opção escolhida.
+
+    Parâmetros:
+    opcao (str): Número da operação escolhida
+    num1 (float): Primeiro número
+    num2 (float): Segundo número
+    """
+
+    # Dicionário com símbolos das operações para exibição
+    simbolos = {
+        "1": "+",
+        "2": "-",
+        "3": "*",
+        "4": "/",
+        "5": "^",
+        "7": "%"
+    }
+
+    # Obtém o símbolo da operação atual
+    simbolo = simbolos[opcao]
+
+    # Executa a operação correspondente à opção escolhida
+    if opcao == "1":  # SOMA
+        resultado = num1 + num2
+
+    elif opcao == "2":  # SUBTRAÇÃO
+        resultado = num1 - num2
+
+    elif opcao == "3":  # MULTIPLICAÇÃO
+        resultado = num1 * num2
+
+    elif opcao == "4":  # DIVISÃO
+        # Verifica se está tentando dividir por zero
+        if num2 == 0:
+            print("❌ Erro: Divisão por zero não é permitida!")
+            return  # Sai da função sem mostrar resultado
+        resultado = num1 / num2
+
+    elif opcao == "5":  # POTÊNCIA
+        resultado = num1 ** num2  # ** é o operador de potência
+
+    elif opcao == "7":  # PORCENTAGEM
+        # Calcula porcentagem: (num1 * num2) / 100
+        resultado = (num1 * num2) / 100
+
+    # Formata o resultado para exibição
+    # Verifica se o resultado é inteiro para não mostrar .0 desnecessariamente
+    if resultado == int(resultado):
+        resultado_formatado = int(resultado)
+    else:
+        resultado_formatado = round(resultado, 4)  # Arredonda para 4 casas decimais
+
+    # Exibe o resultado da operação
+    print(f"\n🔢 RESULTADO: {num1} {simbolo} {num2} = {resultado_formatado}")
+
+
+def historico_calculos():
+    """
+    Versão avançada da calculadora com histórico.
+    Demonstra mais recursos do Python.
+    """
+
+    # Lista para armazenar o histórico de cálculos
+    historico = []
+
+    print("\n" + "=" * 50)
+    print("CALCULADORA COM HISTÓRICO")
+    print("=" * 50)
+
+    while True:
+        print("\nMENU:")
+        print("1. Novo cálculo")
+        print("2. Ver histórico")
+        print("3. Limpar histórico")
+        print("4. Voltar")
+
+        escolha = input("Escolha: ")
+
+        if escolha == "1":
+            # Solicita a expressão matemática do usuário
+            expressao = input("Digite a expressão (ex: 10 + 5): ")
+
+            try:
+                # AVISO DE SEGURANÇA: eval() pode ser perigoso em produção
+                # Aqui estamos usando apenas para demonstração educacional
+                resultado = eval(expressao)  # eval() calcula a expressão
+
+                # Adiciona ao histórico como um dicionário
+                calculo = {
+                    "expressao": expressao,
+                    "resultado": resultado,
+                    "data": "hoje"  # Em versão real, usar datetime.now()
+                }
+                historico.append(calculo)
+
+                print(f"✅ Resultado: {resultado}")
+
+            except Exception as e:
+                print(f"❌ Erro na expressão: {e}")
+
+        elif escolha == "2":
+            if not historico:  # Verifica se o histórico está vazio
+                print("📭 Histórico vazio")
+            else:
+                print("\n📋 HISTÓRICO DE CÁLCULOS:")
+                # Percorre o histórico com enumerate para ter índice
+                for i, calc in enumerate(historico, 1):
+                    print(f"{i}. {calc['expressao']} = {calc['resultado']}")
+
+        elif escolha == "3":
+            historico.clear()  # Limpa toda a lista
+            print("🗑️ Histórico limpo!")
+
+        elif escolha == "4":
+            break  # Sai do loop e retorna
+
+        else:
+            print("❌ Opção inválida!")
+
+
+def calculadora_avancada():
+    """
+    Demonstra operações matemáticas avançadas.
+    """
+
+    print("\n" + "=" * 50)
+    print("FUNÇÕES MATEMÁTICAS AVANÇADAS")
+    print("=" * 50)
+
+    while True:
+        print("\nOperações Avançadas:")
+        print("1. Seno (sin)")
+        print("2. Cosseno (cos)")
+        print("3. Tangente (tan)")
+        print("4. Logaritmo natural (ln)")
+        print("5. Fatorial (!)")
+        print("6. Voltar")
+
+        opcao = input("Escolha: ")
+
+        if opcao == "6":
+            break
+
+        if opcao in ["1", "2", "3", "4"]:
+            try:
+                # Converte para radianos (funções trigonométricas usam radianos)
+                angulo = float(input("Ângulo em graus: "))
+                radianos = math.radians(angulo)  # Converte graus para radianos
+
+                if opcao == "1":  # SENO
+                    resultado = math.sin(radianos)
+                    print(f"sin({angulo}°) = {resultado:.4f}")
+
+                elif opcao == "2":  # COSSENO
+                    resultado = math.cos(radianos)
+                    print(f"cos({angulo}°) = {resultado:.4f}")
+
+                elif opcao == "3":  # TANGENTE
+                    # Verifica ângulos onde tangente não existe (90°, 270°, etc.)
+                    if angulo % 180 == 90:
+                        print("❌ Tangente não definida para este ângulo!")
+                    else:
+                        resultado = math.tan(radianos)
+                        print(f"tan({angulo}°) = {resultado:.4f}")
+
+                elif opcao == "4":  # LOGARITMO NATURAL
+                    num = float(input("Número para ln: "))
+                    if num <= 0:
+                        print("❌ ln só existe para números positivos!")
+                    else:
+                        resultado = math.log(num)
+                        print(f"ln({num}) = {resultado:.4f}")
+
+            except ValueError:
+                print("❌ Valor inválido!")
+
+        elif opcao == "5":  # FATORIAL
+            try:
+                num = int(input("Número para fatorial: "))
+                if num < 0:
+                    print("❌ Fatorial não existe para números negativos!")
+                elif num > 20:  # Limita para não travar o PC
+                    print("⚠️  Número muito grande! Use um menor que 20.")
+                else:
+                    resultado = math.factorial(num)
+                    print(f"{num}! = {resultado}")
+            except ValueError:
+                print("❌ Digite um número inteiro!")
+
+
+# MENU PRINCIPAL DO PROGRAMA
+if __name__ == "__main__":
+    """
+    Ponto de entrada do programa.
+    Esta condição verifica se o arquivo está sendo executado diretamente
+    (não importado como módulo).
+    """
+
+    print("🌟 BEM-VINDO À SUPER CALCULADORA PYTHON 🌟")
+
+    while True:
+        print("\n" + "=" * 50)
+        print("MENU PRINCIPAL")
+        print("=" * 50)
+        print("1. Calculadora Básica")
+        print("2. Calculadora com Histórico")
+        print("3. Funções Avançadas")
+        print("4. Sair do Programa")
+        print("-" * 50)
+
+        modo = input("Escolha o modo (1-4): ")
+
+        if modo == "1":
+            calculadora()  # Chama a calculadora básica
+
+        elif modo == "2":
+            historico_calculos()  # Chama a versão com histórico
+
+        elif modo == "3":
+            calculadora_avancada()  # Chama as funções avançadas
+
+        elif modo == "4":
+            print("\n✨ Obrigado por usar a Super Calculadora Python! ✨")
+            break  # Encerra o programa
+
+        else:
+            print("❌ Opção inválida! Escolha 1, 2, 3 ou 4.")
