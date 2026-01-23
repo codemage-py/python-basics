@@ -1,0 +1,30 @@
+# Sistema de notas
+def sistema_notas():
+    alunos = {}
+    
+    while True:
+        print("\n1. Adicionar aluno")
+        print("2. Ver média")
+        print("3. Sair")
+        
+        opcao = input("Escolha: ")
+        
+        if opcao == "1":
+            nome = input("Nome do aluno: ")
+            nota = float(input("Nota: "))
+            
+            if nome in alunos:
+                alunos[nome].append(nota)
+            else:
+                alunos[nome] = [nota]
+                
+        elif opcao == "2":
+            for nome, notas in alunos.items():
+                media = sum(notas) / len(notas)
+                status = "Aprovado" if media >= 6 else "Reprovado"
+                print(f"{nome}: Média {media:.1f} - {status}")
+                
+        elif opcao == "3":
+            break
+        else:
+            print("Opção inválida!")
