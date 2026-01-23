@@ -1,0 +1,53 @@
+def converter_temperatura(valor, unidade_origem, unidade_destino):
+    # Primeiro converte para Celsius
+    if unidade_origem == 'C':
+        celsius = valor
+    elif unidade_origem == 'F':
+        celsius = (valor - 32) * 5/9
+    elif unidade_origem == 'K':
+        celsius = valor - 273.15
+    else:
+        return None
+    
+    # Depois converte para unidade destino
+    if unidade_destino == 'C':
+        return celsius
+    elif unidade_destino == 'F':
+        return (celsius * 9/5) + 32
+    elif unidade_destino == 'K':
+        return celsius + 273.15
+
+print("🌡️ CONVERSOR DE TEMPERATURA")
+print("Unidades: C (Celsius), F (Fahrenheit), K (Kelvin)")
+
+while True:
+    print("\n" + "="*40)
+    valor = float(input("Temperatura: "))
+    origem = input("De (C/F/K): ").upper()
+    destino = input("Para (C/F/K): ").upper()
+    
+    if origem in ['C', 'F', 'K'] and destino in ['C', 'F', 'K']:
+        resultado = converter_temperatura(valor, origem, destino)
+        
+        # Descrição amigável
+        unidades_nome = {
+            'C': 'Celsius',
+            'F': 'Fahrenheit', 
+            'K': 'Kelvin'
+        }
+        
+        print(f"\n🔥 {valor}°{unidades_nome[origem]} = {resultado:.2f}°{unidades_nome[destino]}")
+        
+        # Curiosidade
+        if destino == 'C':
+            if resultado < 0:
+                print("❄️ Está congelando! Água vira gelo.")
+            elif resultado > 100:
+                print("💨 Está fervendo! Água evapora.")
+            else:
+                print("💧 Temperatura normal da água líquida.")
+    else:
+        print("❌ Unidade inválida!")
+    
+    if input("\nConverter outra? (s/n): ").lower() != 's':
+        break
