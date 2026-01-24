@@ -1,0 +1,20 @@
+import random
+import string
+
+print("🔐 GERADOR DE SENHAS FODASTICAS")
+
+tamanho = int(input("Tamanho da senha (8-20): "))
+tem_numeros = input("Incluir números? (s/n): ").lower() == 's'
+tem_especiais = input("Incluir caracteres especiais? (s/n): ").lower() == 's'
+
+caracteres = string.ascii_letters  # letras maiúsculas e minúsculas
+
+if tem_numeros:
+    caracteres += string.digits  # 0-9
+if tem_especiais:
+    caracteres += "!@#$%&*()_+-=[]{}|;:,.<>?"
+
+senha = ''.join(random.choice(caracteres) for _ in range(tamanho))
+print(f"\n✅ SUA SENHA: {senha}")
+print(f"Tamanho: {len(senha)} caracteres")
+print(f"Fortíssima! 💪")
