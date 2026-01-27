@@ -1,0 +1,40 @@
+import random
+
+print("🃏 JOGO DO 21")
+print("Objetivo: Chegar perto de 21 sem passar!")
+
+pontuacao = 0
+
+while True:
+    carta = random.randint(1, 13)
+    # Cartas com valor 10
+    if carta > 10:
+        carta = 10
+    
+    pontuacao += carta
+    
+    print(f"\nCarta: {carta}")
+    print(f"Total: {pontuacao}")
+    
+    if pontuacao > 21:
+        print("💥 ESTOUROU! Você perdeu!")
+        break
+    elif pontuacao == 21:
+        print("🎯 BLACKJACK! Você ganhou!")
+        break
+    else:
+        continuar = input("Pegar outra carta? (s/n): ").lower()
+        if continuar != 's':
+            print(f"\n🏁 Você parou com {pontuacao} pontos")
+            
+            # Computador joga
+            computador = random.randint(15, 21)
+            print(f"Computador: {computador} pontos")
+            
+            if computador > 21 or pontuacao > computador:
+                print("✅ VOCÊ VENCEU!")
+            elif pontuacao < computador:
+                print("❌ COMPUTADOR VENCEU!")
+            else:
+                print("🤝 EMPATE!")
+            break
