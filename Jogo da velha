@@ -1,0 +1,61 @@
+def mostrar_tabuleiro(tabuleiro):
+    print("\n  0 1 2")
+    for i in range(3):
+        linha = f"{i} "
+        for j in range(3):
+            linha += tabuleiro[i][j] + " "
+        print(linha)
+
+def verificar_vencedor(tabuleiro, jogador):
+    # Linhas
+    for i in range(3):
+        if all(tabuleiro[i][j] == jogador for j in range(3)):
+            return True
+    
+    # Colunas  
+    for j in range(3):
+        if all(tabuleiro[i][j] == jogador for i in range(3)):
+            return True
+    
+    # Diagonais
+    if all(tabuleiro[i][i] == jogador for i in range(3)):
+        return True
+    if all(tabuleiro[i][2-i] == jogador for i in range(3)):
+        return True
+    
+    return False
+
+print("⭕❌ JOGO DA VELHA")
+tabuleiro = [["-" for _ in range(3)] for _ in range(3)]
+jogadores = ["X", "O"]
+vez = 0
+jogadas = 0
+
+while True:
+    mostrar_tabuleiro(tabuleiro)
+    jogador_atual = jogadores[vez % 2]
+    
+    print(f"\nVez do jogador {jogador_atual}")
+    
+    try:
+        linha = int(input("Linha (0-2): "))
+        coluna = int(input("Coluna (0-2): "))
+        
+        if tabuleiro[linha][coluna] == "-":
+            tabuleiro[linha][coluna] = jogador_atual
+            jogadas += 1
+            
+            if verificar_vencedor(tabuleiro, jogador_atual):
+                mostrar_tabuleiro(tabuleiro)
+                print(f"\n🎉 JOGADOR {jogador_atual} VENCEU!")
+                break
+            elif jogadas == 9:
+                mostrar_tabuleiro(tabuleiro)
+                print("\n🤝 EMPATE!")
+                break
+            
+            vez += 1
+        else:
+            print("❌ Posição já ocupada!")
+    except:
+        print("❌ Entrada inválida! Use números 0, 1 ou 2.")
