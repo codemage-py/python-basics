@@ -1,0 +1,38 @@
+print("🏦 SIMULADOR DE CAIXA ELETRÔNICO")
+
+saldo = 1000.00
+extrato = []
+
+while True:
+    print(f"\nSaldo: R$ {saldo:.2f}")
+    print("1. Saque")
+    print("2. Depósito")
+    print("3. Extrato")
+    print("4. Sair")
+    
+    opcao = input("Opção: ")
+    
+    if opcao == "1":
+        valor = float(input("Valor do saque: R$ "))
+        if valor <= saldo:
+            saldo -= valor
+            extrato.append(f"Saque: -R$ {valor:.2f}")
+            print(f"💸 Saque de R$ {valor:.2f} realizado!")
+        else:
+            print("❌ Saldo insuficiente!")
+    
+    elif opcao == "2":
+        valor = float(input("Valor do depósito: R$ "))
+        saldo += valor
+        extrato.append(f"Depósito: +R$ {valor:.2f}")
+        print(f"💰 Depósito de R$ {valor:.2f} realizado!")
+    
+    elif opcao == "3":
+        print("\n📄 EXTRATO:")
+        for movimento in extrato[-5:]:  # Últimas 5 transações
+            print(movimento)
+        print(f"Saldo atual: R$ {saldo:.2f}")
+    
+    elif opcao == "4":
+        print("Obrigado por usar nosso banco! 👋")
+        break
