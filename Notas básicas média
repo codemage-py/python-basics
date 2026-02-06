@@ -1,0 +1,15 @@
+n1 = int(input('Qual a sua nota do primeiro bimestre?'))
+n2 = int(input('Qual a sua nota do segundo bimestre?'))
+n3 = int(input('Qual a sua nota do terceiro bimestre?'))
+n4 = int(input('Qual a sua nota do quarto bimestre?'))
+med = (n1 + n2 + n3 + n4) / 4
+
+print(med)
+if med >= 8:
+    print('Você passou com nota alta! Parabéns.')
+elif med >= 6:
+    print('Você passou arrastado!')
+elif med <= 5:
+    print('Reprovado!')
+else:
+    print('Reprovado')
