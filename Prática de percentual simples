@@ -1,0 +1,5 @@
+n1 =  int(input('Qual valor do produto? '))
+n2 = 5
+desconto = (5 * n1) / 100
+
+print('Seu desconto é de R$:',desconto,'-5%')
