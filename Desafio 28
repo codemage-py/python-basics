@@ -1,0 +1,16 @@
+#desafio 28
+#condições
+
+import random
+print('===== DESAFIO =====')
+print('Adivinhe o número de 0 a 5')
+chute = int(input('Chute o seu número:'))
+
+lista = [0, 1, 2, 3, 4, 5]
+escolhido = random.choice(lista)
+if escolhido == chute:
+    print('Você acertou! PARABENS!')
+else:
+    print('Você errou! QUE PENA!')
+print('Carregando...')
+print('O número escolhido foi {}'.format(escolhido))
